@@ -18,6 +18,8 @@ dependencies:
   - pytorch
   - torchvision
   - torchaudio
+  - shimmy
+  - imageio
   - pip:
       - gymnasium
       - stable-baselines3

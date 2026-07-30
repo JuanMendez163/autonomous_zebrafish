@@ -142,3 +142,9 @@ dmypy.json
 
 # Temporary model checkpoints prior to gs bucket transfer
 gs:/
+
+# Local logged output
+outputs/
+*.pt
+*.pth
+wandb/
