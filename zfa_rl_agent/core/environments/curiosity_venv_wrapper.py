@@ -7,7 +7,7 @@ from zfa_rl_agent.core.agent.curiosity.curiosity_modules import (
     ICM, 
     RandomNetworkDistillation,
     PersistentProgress,
-    TaskProgress,
+    #TaskProgress,
     ModelMemoryMismatch, 
     BeliefProgress
     )
@@ -37,7 +37,7 @@ def curiosity_venv(venv,
                     'surprisal': Surprisal,
                     'icm': ICM,
                     'disagreement': Disagreement,
-                    'task_progress': TaskProgress,
+                    #'task_progress': TaskProgress,
                     'persistence': PersistentProgress,
                     '3m_progress': ModelMemoryMismatch, 
                     'belief_progress': BeliefProgress,
@@ -52,8 +52,8 @@ def curiosity_venv(venv,
           args = dict(world_model=world_model(), persistent_world_model_path=persistent_world_model_path, gamma=gamma)
      elif hardset == 'belief_progress':
           args = dict(world_model=world_model(), memory_path=persistent_world_model_path, cycle_horizon=cycle_horizon, gamma=alpha)
-     elif hardset == 'task_progress':
-          args = dict(alpha=alpha)
+     # elif hardset == 'task_progress':
+     #      args = dict(alpha=alpha)
      else: 
           args = dict()
      module = module_dict[hardset](**args)
