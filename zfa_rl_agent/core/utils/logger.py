@@ -1,4 +1,3 @@
-# filepath: /home/rdkeller/zebrafish_agent/zfa_rl_agent/core/utils/logger.py
 import logging
 
 logger = logging.getLogger(__name__)

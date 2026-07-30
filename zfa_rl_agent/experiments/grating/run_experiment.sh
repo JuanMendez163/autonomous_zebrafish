@@ -11,7 +11,7 @@
 #SBATCH --mail-user=rdkeller@andrew.cmu.edu
 
 conda activate fishies
-export PYTHONPATH="/home/rdkeller/zebrafish_agent:$PYTHONPATH"
+export PYTHONPATH="/Users/juanmendez/Kozachkov/autonomous_zebrafish:$PYTHONPATH"
 
 export RAY_DEDUP_LOGS=1
 export HYDRA_FULL_ERROR=1
@@ -102,7 +102,7 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-python /home/rdkeller/zebrafish_agent/zfa_rl_agent/experiments/grating/run_experiment.py \
+python /Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/experiments/grating/run_experiment.py \
     name="$NAME" \
     total_timesteps="$TOTAL_TIMESTEPS" \
     checkpoint_save_freq="$CHECKPOINT_FREQ" \

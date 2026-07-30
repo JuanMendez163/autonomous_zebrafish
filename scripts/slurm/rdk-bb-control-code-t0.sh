@@ -18,5 +18,5 @@ which python
 
 ## source animal key || 0-1: fish, 2: white noise, 3: gaussian process, 4: bang-bang controller
 
-srun python /home/rdkeller/zebrafish_agent/scripts/python_scripts/create_job_info_for_chunking_data.py --processing_chunk_size=5000
-srun python /home/rdkeller/zebrafish_agent/zfa/data_comparisons/rdk-controls-percentile-map.py --train-frac=0.5 --num-parallel-jobs=25 --source_cell_type="glial" --target_cell_type="glial" --num-bootstrap-iters=100 --job_ID=$SLURM_ARRAY_TASK_ID --source_animal=5 --target_animal=0
+srun python /Users/juanmendez/Kozachkov/autonomous_zebrafish/scripts/python_scripts/create_job_info_for_chunking_data.py --processing_chunk_size=5000
+srun python /Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa/data_comparisons/rdk-controls-percentile-map.py --train-frac=0.5 --num-parallel-jobs=25 --source_cell_type="glial" --target_cell_type="glial" --num-bootstrap-iters=100 --job_ID=$SLURM_ARRAY_TASK_ID --source_animal=5 --target_animal=0

@@ -11,7 +11,7 @@
 #SBATCH --mail-user=rdkeller@andrew.cmu.edu
 
 conda activate fishies
-export PYTHONPATH="/home/rdkeller/zebrafish_agent:$PYTHONPATH"
+export PYTHONPATH="/Users/juanmendez/Kozachkov/autonomous_zebrafish:$PYTHONPATH"
 export RAY_DEDUP_LOGS=1
 export HYDRA_FULL_ERROR=1
 export MUJOCO_GL="egl"
@@ -35,7 +35,7 @@ IDM_TYPE="progress"
 
 NAME="stacked_training_2task-${IDM_TYPE}-2D_drift-${FORCE}"
 
-python /home/rdkeller/zebrafish_agent/zfa_rl_agent/experiments/continue_training/run_experiment.py \
+python /Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/experiments/continue_training/run_experiment.py \
     name="$NAME" \
     total_timesteps="$TOTAL_TIMESTEPS" \
     eval_freq="$EVAL_FREQ" \

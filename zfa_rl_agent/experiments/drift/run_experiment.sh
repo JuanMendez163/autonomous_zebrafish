@@ -13,7 +13,7 @@
 #SBATCH --mail-user=rdkeller@andrew.cmu.edu
 
 conda activate fishies
-export PYTHONPATH="/home/rdkeller/zebrafish_agent:$PYTHONPATH"
+export PYTHONPATH="/Users/juanmendez/Kozachkov/autonomous_zebrafish:$PYTHONPATH"
 export RAY_DEDUP_LOGS=1
 export HYDRA_FULL_ERROR=1
 export MUJOCO_GL="egl"
@@ -48,11 +48,11 @@ LOAD_DMC=false
 USE_FLOW=false
 
 
-## wm_path=/home/rdkeller/zebrafish_agent/zfa_rl_agent/analysis/local_models/world_models/free-grating-progress-mlp-idm-0.0-task-1.0-penalty-0.0-swimmer-true-2025-04-05_17-21-41-4512851_19693696_steps.pt
-## policy_path=/home/rdkeller/zebrafish_agent/zfa_rl_agent/analysis/local_models/policies/free-grating-progress-mlp-idm-0.0-task-1.0-penalty-0.0-swimmer-true-2025-04-05_17-21-41-4512851_19693696_steps.zip
+## wm_path=/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/world_models/free-grating-progress-mlp-idm-0.0-task-1.0-penalty-0.0-swimmer-true-2025-04-05_17-21-41-4512851_19693696_steps.pt
+## policy_path=/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/policies/free-grating-progress-mlp-idm-0.0-task-1.0-penalty-0.0-swimmer-true-2025-04-05_17-21-41-4512851_19693696_steps.zip
 
-wm_path=/home/rdkeller/zebrafish_agent/zfa_rl_agent/analysis/local_models/world_models/progress-2D_drift_force-0.002-idm_scale-1.0-task_scale-1.0-2025-03-29_16-21-51_19393792_steps.pt
-policy_path=/home/rdkeller/zebrafish_agent/zfa_rl_agent/analysis/local_models/policies/base_swimmer.zip
+wm_path=/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/world_models/progress-2D_drift_force-0.002-idm_scale-1.0-task_scale-1.0-2025-03-29_16-21-51_19393792_steps.pt
+policy_path=/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/policies/base_swimmer.zip
 
 PRETRAIN_ENV=pi_swimmer
 NAME="drift-${FORCE_MAG}-${IDM_TYPE}-${WORLD_MODEL_TYPE}-idm-${IDM_SCALE}-task-${TASK_SCALE}-penalty-${ACTION_PENALTY_SCALE}-PRT-${PRETRAIN_ENV}"
@@ -107,7 +107,7 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-python /home/rdkeller/zebrafish_agent/zfa_rl_agent/experiments/drift/run_experiment.py \
+python /Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/experiments/drift/run_experiment.py \
     name="$NAME" \
     total_timesteps="$TOTAL_TIMESTEPS" \
     checkpoint_save_freq="$CHECKPOINT_FREQ" \

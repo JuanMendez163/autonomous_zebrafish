@@ -16,5 +16,5 @@
 source activate /home/rdkeller/miniconda3/envs/fishies
 which python 
 
-srun python /home/rdkeller/zebrafish_agent/scripts/python_scripts/create_job_info_for_chunking_data.py --processing_chunk_size=5000
-srun python /home/rdkeller/zebrafish_agent/zfa/data_comparisons/leo-inter-animal-percentile-map.py --train-frac=0.5 --num-parallel-jobs=25 --source_cell_type="glial" --target_cell_type="glial" --num-bootstrap-iters=100 --job_ID=$SLURM_ARRAY_TASK_ID --source_animal=1 --target_animal=0
+srun python /Users/juanmendez/Kozachkov/autonomous_zebrafish/scripts/python_scripts/create_job_info_for_chunking_data.py --processing_chunk_size=5000
+srun python /Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa/data_comparisons/leo-inter-animal-percentile-map.py --train-frac=0.5 --num-parallel-jobs=25 --source_cell_type="glial" --target_cell_type="glial" --num-bootstrap-iters=100 --job_ID=$SLURM_ARRAY_TASK_ID --source_animal=1 --target_animal=0
