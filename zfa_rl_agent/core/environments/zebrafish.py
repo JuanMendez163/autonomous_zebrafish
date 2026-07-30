@@ -30,7 +30,7 @@ def swimmer_venv(parallel, n_envs, seed, monitor_dir, force_magnitude, view_rend
     if parallel:
       logger.info("Vectorizing with SubprocVecEnv")
       vec_env = make_vec_env(lambda: swimmer(force_magnitude=force_magnitude, obs_render_args=obs_render_args, view_render_args=view_render_args), 
-                              n_envs=n_envs, seed=seed, monitor_dir=monitor_dir, vec_env_cls=SubprocVecEnv)
+                              n_envs=n_envs, seed=seed, monitor_dir=monitor_dir, vec_env_cls=DummyVecEnv) #vec_env_cls=SubprocVecEnv)
     else:
       vec_env = make_vec_env(lambda: swimmer(force_magnitude=force_magnitude, obs_render_args=obs_render_args, view_render_args=view_render_args),
                                 n_envs=n_envs, seed=seed, monitor_dir=monitor_dir, vec_env_cls=DummyVecEnv)
