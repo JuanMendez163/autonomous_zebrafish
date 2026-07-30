@@ -1,0 +1,28 @@
+name: autonomous_zebrafish
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - scipy
+  - pillow
+  - pandas
+  - matplotlib
+  - tqdm
+  - hydra-core
+  - omegaconf
+  - ipykernel
+  - jupyterlab
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pip:
+      - gymnasium
+      - stable-baselines3
+      - sb3-contrib
+      - dm-control
+      - wandb
+      - ray
+      - lxml
