@@ -21,6 +21,7 @@ dependencies:
   - shimmy
   - imageio
   - pip:
+      - gym
       - gymnasium
       - stable-baselines3
       - sb3-contrib
