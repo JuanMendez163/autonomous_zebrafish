@@ -206,7 +206,7 @@ class drift(base.Task):
                              margin=5*target_size,
                              sigmoid='long_tail')
 
-assets_dir = "/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/core/environments/"
+assets_dir = "/users/jjmendez/autonomous_zebrafish/zfa_rl_agent/core/environments/"
 ASSETS = {}
 for key, value in common.ASSETS.items():
     new_key = assets_dir + key
@@ -256,7 +256,7 @@ def _make_model(n_bodies):
   etree.SubElement(asset, 'texture', {
     'name': 'grass_tex',
     'type': '2d',
-    'file': '/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/core/environments/common/OutdoorGrassFloorD.png'
+    'file': '/users/jjmendez/autonomous_zebrafish/zfa_rl_agent/core/environments/common/OutdoorGrassFloorD.png'
     #'file': '/Users/reecekeller/Documents/neuroagents/zebrafish_agent/zfa_rl_agent/core/environments/common/OutdoorGrassFloorD.png'
 
   })
