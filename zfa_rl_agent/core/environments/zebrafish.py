@@ -27,13 +27,13 @@ def swimmer_venv(parallel, n_envs, seed, monitor_dir, force_magnitude, view_rend
     obs_render_args = obs_render_args or {'height': 64, 'width': 64, 'camera_id': 2}
     view_render_args = view_render_args or {'height': 256, 'width': 256, 'camera_id': 0}
 
-    if parallel:
+    if parallel: # Config param
       logger.info("Vectorizing with SubprocVecEnv")
       vec_env = make_vec_env(lambda: swimmer(force_magnitude=force_magnitude, obs_render_args=obs_render_args, view_render_args=view_render_args), 
-                              n_envs=n_envs, seed=seed, monitor_dir=monitor_dir, vec_env_cls=DummyVecEnv) #vec_env_cls=SubprocVecEnv)
+                              n_envs=n_envs, seed=seed, monitor_dir=monitor_dir, vec_env_cls=SubprocVecEnv)
     else:
       vec_env = make_vec_env(lambda: swimmer(force_magnitude=force_magnitude, obs_render_args=obs_render_args, view_render_args=view_render_args),
-                                n_envs=n_envs, seed=seed, monitor_dir=monitor_dir, vec_env_cls=DummyVecEnv)
+                                n_envs=n_envs, seed=seed, monitor_dir=monitor_dir, vec_env_cls=DummyVecEnv) # DummyVecEnv is for only one environment
 
     env = VecTransposeImage(vec_env)
    # env = VecImageStack(env, n_stack=2, image_key='pixels', channels_order='first')
