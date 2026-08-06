@@ -148,3 +148,6 @@ outputs/
 *.pt
 *.pth
 wandb/
+
+# Dir to store training outputs
+training_output/
