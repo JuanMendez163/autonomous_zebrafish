@@ -1,17 +1,19 @@
 #!/bin/bash -l
 #SBATCH --job-name=drift-smoke
-#SBATCH --partition=general
+#SBATCH --partition=carney-lkozachk-condo2
 #SBATCH --time=0-06:00:00
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=24G
 #SBATCH --gres=gpu:A6000:1
-#SBATCH --output=/data/group_data/neuroagents_lab/zfa_training/rl_training_logs/slurm/out/%x-%j.out
-#SBATCH --error=/data/group_data/neuroagents_lab/zfa_training/rl_training_logs/slurm/err/%x-%j.err
+#SBATCH --output=/users/jjmendez/autonomous_zebrafish/training_output/%x-%j.out
+#SBATCH --error=/users/jjmendez/autonomous_zebrafish/training_output/%x-%j.err
 #SBATCH --mail-type=END
-#SBATCH --mail-user=rdkeller@andrew.cmu.edu
+#SBATCH --mail-user=juan_mendez@brown.edu
 
-conda activate fishies
-export PYTHONPATH="/Users/juanmendez/Kozachkov/autonomous_zebrafish:$PYTHONPATH"
+module load miniforge3/25.3.0-3
+source ${MAMBA_ROOT_PREFIX}/etc/profile.d/conda.sh
+conda activate autonomous_zebrafish
+export PYTHONPATH="/users/jjmendez/autonomous_zebrafish:$PYTHONPATH"
 export RAY_DEDUP_LOGS=1
 export HYDRA_FULL_ERROR=1
 export MUJOCO_GL="egl"
@@ -21,8 +23,7 @@ export WANDB_DISABLE_CACHE=true
 
 #### Quick smoke-run parameters ####
 CHECKPOINT_POLICY=true
-CHECKPOING_WM=false
-
+CHECKPOINT_WM=false
 TOTAL_TIMESTEPS=1000000
 CHECKPOINT_FREQ=100000
 LEARNING_RATE=0.0003
@@ -48,9 +49,9 @@ USE_FLOW=false
 
 NAME="drift-smoke-${FORCE_MAG}-${IDM_TYPE}-${WORLD_MODEL_TYPE}-nenvs-${N_TRAIN_ENVS}-steps-${TOTAL_TIMESTEPS}"
 
-SCRATCH_DIR="/scratch/rdkeller"
+SCRATCH_DIR="/users/jjmendez/scratch"
 SCRATCH_JOB_DIR="${SCRATCH_DIR}/${NAME}"
-PERM_LOG_DIR=/data/group_data/neuroagents_lab/zfa_training/rl_training_logs/${NAME}
+PERM_LOG_DIR=/users/jjmendez/autonomous_zebrafish/training_output/${NAME}
 
 echo "====== QUICK SMOKE-RUN ENVIRONMENT REPORT ======"
 echo "Node: ${SLURM_NODELIST}"
@@ -85,7 +86,7 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-python /Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/experiments/drift/run_experiment.py \
+python /users/jjmendez/autonomous_zebrafish/zfa_rl_agent/experiments/drift/run_experiment.py \
     name="$NAME" \
     total_timesteps="$TOTAL_TIMESTEPS" \
     checkpoint_save_freq="$CHECKPOINT_FREQ" \
