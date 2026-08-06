@@ -1,6 +1,6 @@
 #!/bin/bash -l
 #SBATCH --job-name=drift-smoke
-#SBATCH --partition=carney-lkozachk-condo2
+#SBATCH --partition=batch
 #SBATCH --time=0-06:00:00
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=24G
