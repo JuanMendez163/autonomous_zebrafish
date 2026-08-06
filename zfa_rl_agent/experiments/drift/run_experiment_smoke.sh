@@ -1,10 +1,10 @@
 #!/bin/bash -l
 #SBATCH --job-name=drift-smoke
 #SBATCH --partition=batch
-#SBATCH --time=0-06:00:00
+#SBATCH --time=06:00:00
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=24G
-#SBATCH --gres=gpu:A6000:1
+#SBATCH -g 1
 #SBATCH --output=/users/jjmendez/autonomous_zebrafish/training_output/%x-%j.out
 #SBATCH --error=/users/jjmendez/autonomous_zebrafish/training_output/%x-%j.err
 #SBATCH --mail-type=END
