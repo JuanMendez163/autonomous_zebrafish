@@ -3,11 +3,13 @@ load_dmc_agent: false
 training_device: cuda
 checkpointing: false
 wm_checkpointing: false
+save_best_model: true
 wandb: false
 
 total_timesteps: 1000000
 parallel: true
 n_train_envs: 64
+n_eval_envs: 1
 seed: 1234
 n_frames: 2 # DO NOT MODIFY
 n_steps: 2048
@@ -50,6 +52,8 @@ wm_checkpoint_path: ${log_subdir}/wm_checkpoints
 
 checkpoint_save_freq: 1000000
 checkpoint_freq: ${eval:'${checkpoint_save_freq} // ${n_train_envs}'}
+eval_freq: 100000
+n_eval_episodes: 5
 
 base_environment:
   _target_: zfa_rl_agent.core.environments.zebrafish.swimmer_venv
@@ -132,6 +136,14 @@ load_agent:
       net_arch: [64, 64]
       flow: ${use_flow}
 
+eval_environment:
+  _target_: zfa_rl_agent.core.environments.zebrafish.swimmer_venv
+  parallel: false
+  n_envs: ${n_eval_envs}
+  seed: ${seed}
+  monitor_dir: ${monitor_dir}
+  force_magnitude: ${drift_force}
+
 checkpoint_callback:
   _target_: stable_baselines3.common.callbacks.CheckpointCallback
   save_freq: ${checkpoint_freq}
@@ -139,6 +151,16 @@ checkpoint_callback:
   name_prefix: ${run_name}
   save_replay_buffer: true
   save_vecnormalize: false
+
+eval_callback:
+  _target_: stable_baselines3.common.callbacks.EvalCallback
+  eval_env: ${eval_environment}
+  eval_freq: ${eval:'${eval_freq} // ${n_train_envs}'}
+  n_eval_episodes: ${n_eval_episodes}
+  log_path: ${eval_path}
+  best_model_save_path: ${best_model_path}
+  render: false
+  warn: true
 
 wm_checkpoint_callback:
   _target_: zfa_rl_agent.core.utils.callbacks.ModelCheckpointCallback

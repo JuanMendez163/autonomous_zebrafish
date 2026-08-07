@@ -43,19 +43,20 @@ def train(config):
     #     pytorch=True,  # Auto-detect PyTorch
     #     )    
     
+    run = None
     if config.wandb:
-    	run = wandb.init(
-                project="zfa_IDM",
-                dir=config.log_subdir,
-                #root_logdir=config.tb_log_dir,
-                #group="idm_training",
-                name=config.run_name,
-                #tags=["train_metrics"], 
-                config=OmegaConf.to_object(config),
-                sync_tensorboard=True,  # auto-upload sb3's tensorboard metrics
-                monitor_gym=False,  # True = save videos, but doesn't work
-                save_code=False,
-            )
+        run = wandb.init(
+            project="zfa_IDM",
+            dir=config.log_subdir,
+            #root_logdir=config.tb_log_dir,
+            #group="idm_training",
+            name=config.run_name,
+            #tags=["train_metrics"], 
+            config=OmegaConf.to_object(config),
+            sync_tensorboard=True,  # auto-upload sb3's tensorboard metrics
+            monitor_gym=False,  # True = save videos, but doesn't work
+            save_code=False,
+        )
     
     if config.load_dmc_agent:
         logger.info("Loading Model")
@@ -72,12 +73,15 @@ def train(config):
     if config.checkpointing:
         checkpoint_callback = instantiate(config.checkpoint_callback)
         callbacks.append(checkpoint_callback)
+    if config.save_best_model:
+        eval_callback = instantiate(config.eval_callback)
+        callbacks.append(eval_callback)
     if config.wm_checkpointing:
         wm_checkpoint_callback = instantiate(config.wm_checkpoint_callback)
         callbacks.append(wm_checkpoint_callback)
     if config.wandb:
-    	wandb_callback = WandbCallback(verbose=2)
-    	callbacks.append(wandb_callback)
+        wandb_callback = WandbCallback(verbose=2)
+        callbacks.append(wandb_callback)
     logger.info("Beginning Training")
 
     log_process_stats()
@@ -88,7 +92,8 @@ def train(config):
     model.env.close()
     print(model.env._step_count)
     logger.info("Training Complete")
-    if config.wandb: run.finish()
+    if config.wandb and run is not None:
+        run.finish()
 
 if __name__ == "__main__":
     train()
