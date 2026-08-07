@@ -1,10 +1,10 @@
 #!/bin/bash -l
 #SBATCH --job-name=drift-smoke
-#SBATCH --partition=batch
-#SBATCH --time=06:00:00
-#SBATCH --cpus-per-task=16
+#SBATCH --partition=gpu
+#SBATCH --time=08:00:00
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=24G
-#SBATCH -g 1
+#SBATCH --gres=gpu:1
 #SBATCH --output=/users/jjmendez/autonomous_zebrafish/training_output/%x-%j.out
 #SBATCH --error=/users/jjmendez/autonomous_zebrafish/training_output/%x-%j.err
 #SBATCH --mail-type=END
@@ -85,6 +85,16 @@ cleanup() {
 }
 
 trap cleanup EXIT INT TERM
+
+nvidia-smi
+echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
+
+python -c "
+import torch
+print('cuda available:', torch.cuda.is_available())
+print('device count:', torch.cuda.device_count())
+print('cuda version:', torch.version.cuda)
+"
 
 python /users/jjmendez/autonomous_zebrafish/zfa_rl_agent/experiments/drift/run_experiment.py \
     name="$NAME" \

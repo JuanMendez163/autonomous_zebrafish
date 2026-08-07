@@ -43,7 +43,8 @@ def train(config):
     #     pytorch=True,  # Auto-detect PyTorch
     #     )    
     
-    run = wandb.init(
+    if config.wandb:
+    	run = wandb.init(
                 project="zfa_IDM",
                 dir=config.log_subdir,
                 #root_logdir=config.tb_log_dir,
@@ -55,6 +56,7 @@ def train(config):
                 monitor_gym=False,  # True = save videos, but doesn't work
                 save_code=False,
             )
+    
     if config.load_dmc_agent:
         logger.info("Loading Model")
         model = instantiate(config.load_agent)
@@ -73,9 +75,9 @@ def train(config):
     if config.wm_checkpointing:
         wm_checkpoint_callback = instantiate(config.wm_checkpoint_callback)
         callbacks.append(wm_checkpoint_callback)
-
-    wandb_callback = WandbCallback(verbose=2)
-    callbacks.append(wandb_callback)
+    if config.wandb:
+    	wandb_callback = WandbCallback(verbose=2)
+    	callbacks.append(wandb_callback)
     logger.info("Beginning Training")
 
     log_process_stats()
@@ -86,7 +88,7 @@ def train(config):
     model.env.close()
     print(model.env._step_count)
     logger.info("Training Complete")
-    run.finish()
+    if config.wandb: run.finish()
 
 if __name__ == "__main__":
     train()

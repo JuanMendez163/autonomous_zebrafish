@@ -3,6 +3,7 @@ load_dmc_agent: false
 training_device: cuda
 checkpointing: false
 wm_checkpointing: false
+wandb: false
 
 total_timesteps: 1000000
 parallel: true
