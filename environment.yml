@@ -30,3 +30,4 @@ dependencies:
       - ray
       - lxml
       - tensorboard
+      - ffmpeg
