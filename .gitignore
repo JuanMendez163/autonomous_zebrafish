@@ -149,5 +149,9 @@ outputs/
 *.pth
 wandb/
 
-# Dir to store training outputs
+# Dir to store training outputs and vid frames
 training_output/
+render_output/
+
+# Any rendered videos
+*.mp4
