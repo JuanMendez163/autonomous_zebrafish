@@ -151,3 +151,7 @@ wandb/
 
 # Dir to store training outputs
 training_output/
+
+# Any rendered videos as well as frames
+*.mp4
+render_output/
