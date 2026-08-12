@@ -1,19 +1,20 @@
 #!/bin/bash -l
 #SBATCH --job-name=drift
-#SBATCH --partition=general
+#SBATCH --partition=gpu
+#SBATCH --account=carney-lkozachk-condo2
 #SBATCH --time=2-00:00:00
 #SBATCH --cpus-per-task=76
 #SBATCH --mem=64G
 #SBATCH --gres=gpu:A6000:1
-##SBATCH --output=/data/user_data/rdkeller/rl_training_logs/slurm/out/%x-%j.out
-##SBATCH --error=/data/user_data/rdkeller/rl_training_logs/slurm/err/%x-%j.err
-#SBATCH --output=/data/group_data/neuroagents_lab/zfa_training/rl_training_logs/slurm/out/%x-%j.out
-#SBATCH --error=/data/group_data/neuroagents_lab/zfa_training/rl_training_logs/slurm/err/%x-%j.err
+#SBATCH --output=/users/jjmendez/autonomous_zebrafish/training_output/%x-%j.out
+#SBATCH --error=/users/jjmendez/autonomous_zebrafish/training_output/%x-%j.err
 #SBATCH --mail-type=END
-#SBATCH --mail-user=rdkeller@andrew.cmu.edu
+#SBATCH --mail-user=juan_mendez@brown.edu
 
-conda activate fishies
-export PYTHONPATH="/Users/juanmendez/Kozachkov/autonomous_zebrafish:$PYTHONPATH"
+module load miniforge3/25.3.0-3
+source ${MAMBA_ROOT_PREFIX}/etc/profile.d/conda.sh
+conda activate autonomous_zebrafish
+export PYTHONPATH="/users/jjmendez/autonomous_zebrafish:$PYTHONPATH"
 export RAY_DEDUP_LOGS=1
 export HYDRA_FULL_ERROR=1
 export MUJOCO_GL="egl"
@@ -23,7 +24,7 @@ export WANDB_DISABLE_CACHE=true
 
 #### Experiment Meta-Parameters ####
 CHECKPOINT_POLICY=true
-CHECKPOING_WM=false
+CHECKPOINT_WM=false
 
 TOTAL_TIMESTEPS=60000000
 CHECKPOINT_FREQ=250000
@@ -48,21 +49,20 @@ LOAD_DMC=false
 USE_FLOW=false
 
 
-## wm_path=/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/world_models/free-grating-progress-mlp-idm-0.0-task-1.0-penalty-0.0-swimmer-true-2025-04-05_17-21-41-4512851_19693696_steps.pt
-## policy_path=/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/policies/free-grating-progress-mlp-idm-0.0-task-1.0-penalty-0.0-swimmer-true-2025-04-05_17-21-41-4512851_19693696_steps.zip
+## wm_path=/users/jjmendez/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/world_models/free-grating-progress-mlp-idm-0.0-task-1.0-penalty-0.0-swimmer-true-2025-04-05_17-21-41-4512851_19693696_steps.pt
+## policy_path=/users/jjmendez/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/policies/free-grating-progress-mlp-idm-0.0-task-1.0-penalty-0.0-swimmer-true-2025-04-05_17-21-41-4512851_19693696_steps.zip
 
-wm_path=/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/world_models/progress-2D_drift_force-0.002-idm_scale-1.0-task_scale-1.0-2025-03-29_16-21-51_19393792_steps.pt
-policy_path=/Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/analysis/local_models/policies/base_swimmer.zip
+wm_path=""
+policy_path=""
 
 PRETRAIN_ENV=pi_swimmer
 NAME="drift-${FORCE_MAG}-${IDM_TYPE}-${WORLD_MODEL_TYPE}-idm-${IDM_SCALE}-task-${TASK_SCALE}-penalty-${ACTION_PENALTY_SCALE}-PRT-${PRETRAIN_ENV}"
 
 ##### Training Script #####
 
-SCRATCH_DIR="/scratch/rdkeller"
+SCRATCH_DIR="/users/jjmendez/scratch"
 SCRATCH_JOB_DIR="${SCRATCH_DIR}/${NAME}"
-##PERM_LOG_DIR="/data/user_data/rdkeller/rl_training_logs/${NAME}"
-PERM_LOG_DIR=/data/group_data/neuroagents_lab/zfa_training/rl_training_logs/${NAME}
+PERM_LOG_DIR=/users/jjmendez/autonomous_zebrafish/training_output/${NAME}
 
 echo "====== JOB ENVIRONMENT REPORT ======"
 echo "Node: $SLURM_NODELIST"
@@ -107,7 +107,7 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-python /Users/juanmendez/Kozachkov/autonomous_zebrafish/zfa_rl_agent/experiments/drift/run_experiment.py \
+python /users/jjmendez/autonomous_zebrafish/zfa_rl_agent/experiments/drift/run_experiment.py \
     name="$NAME" \
     total_timesteps="$TOTAL_TIMESTEPS" \
     checkpoint_save_freq="$CHECKPOINT_FREQ" \

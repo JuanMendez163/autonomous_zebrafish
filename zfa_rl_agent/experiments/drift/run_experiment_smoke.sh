@@ -1,6 +1,7 @@
 #!/bin/bash -l
 #SBATCH --job-name=drift-smoke
 #SBATCH --partition=gpu
+#SBATCH --account=carney-lkozachk-condo2
 #SBATCH --time=02:00:00
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=24G
